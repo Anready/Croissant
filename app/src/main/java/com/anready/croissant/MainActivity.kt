@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.anready.croissant.Constants.LOGS
 import com.anready.croissant.adapter.FileUtils
+import com.anready.croissant.providers.LogsActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +47,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         FileUtils.getObjectsByFolderId(this)
+
+        val fab = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.floatingActionButton)
+        fab.setOnClickListener {
+            startActivity(Intent(this, LogsActivity::class.java))
+        }
 
         //if someone interesting to do a normal user interface for logs
         val sharedPreferences = getSharedPreferences(LOGS, Context.MODE_PRIVATE)
