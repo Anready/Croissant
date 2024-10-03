@@ -1,12 +1,14 @@
-package com.anready.croissant
+package com.anready.croissant.acitivities
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.anready.croissant.BuildConfig
+import com.anready.croissant.R
 import com.anready.croissant.adapter.AppAdapter
-import com.anready.croissant.adapter.AppModel
+import com.anready.croissant.models.AppModel
 
 class AppControl : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

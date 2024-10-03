@@ -1,4 +1,4 @@
-package com.anready.croissant.providers
+package com.anready.croissant.acitivities
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.anready.croissant.Constants.LOGS
 import com.anready.croissant.R
+import com.anready.croissant.models.Log
 import java.text.SimpleDateFormat
 import java.util.Locale
 

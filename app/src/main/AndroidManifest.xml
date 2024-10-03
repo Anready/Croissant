@@ -22,13 +22,13 @@
         android:theme="@style/Theme.Croissant"
         tools:targetApi="31">
         <activity
-            android:name=".AppControl"
+            android:name=".acitivities.AppControl"
             android:exported="false" />
         <activity
-            android:name=".providers.LogsActivity"
+            android:name=".acitivities.LogsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".acitivities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

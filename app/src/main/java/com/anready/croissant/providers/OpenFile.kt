@@ -38,7 +38,7 @@ class OpenFile : AppCompatActivity() {
             }
         }
 
-        if (getSharedPreferences(OPEN_FILES, Context.MODE_PRIVATE)?.getBoolean(callingPackage, true) == false) {
+        if (getSharedPreferences(OPEN_FILES, Context.MODE_PRIVATE)?.getBoolean(callingPackage, false) == false) {
             setResult(6, Intent().putExtra("ERR", "ERR_06: No permission to open files"))
             this.finish()
             return

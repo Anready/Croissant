@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import com.anready.croissant.Constants.APPS_READ_ACCESS
 import com.anready.croissant.Constants.OPEN_FILES
 import com.anready.croissant.R
+import com.anready.croissant.models.AppModel
 
 class AppAdapter(private val context: Context, private val appList: List<AppModel>) : BaseAdapter() {
 
@@ -52,13 +53,13 @@ class AppAdapter(private val context: Context, private val appList: List<AppMode
         "${app.name} (${app.packageName})".also { name.text = it }
 
         val switchButton = dialogView.findViewById<SwitchMaterial>(R.id.switchButton)
-        switchButton.isChecked = read.getBoolean(app.packageName, true)
+        switchButton.isChecked = read.getBoolean(app.packageName, false)
         switchButton.setOnCheckedChangeListener { _, isChecked ->
             read.edit().putBoolean(app.packageName, isChecked).apply()
         }
 
         val openFiles = dialogView.findViewById<SwitchMaterial>(R.id.switchButton2)
-        openFiles.isChecked = open.getBoolean(app.packageName, true)
+        openFiles.isChecked = open.getBoolean(app.packageName, false)
         openFiles.setOnCheckedChangeListener { _, isChecked ->
             open.edit().putBoolean(app.packageName, isChecked).apply()
         }

@@ -10,8 +10,9 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
-import com.anready.croissant.MainActivity
+import com.anready.croissant.acitivities.MainActivity
 import com.anready.croissant.adapter.FileUtils.getObjectsByFolderId
+import com.anready.croissant.models.DirectoryContents
 import com.anready.croissant.providers.OpenFile
 import java.io.File
 

@@ -1,4 +1,4 @@
-package com.anready.croissant
+package com.anready.croissant.acitivities
 
 import android.Manifest
 import android.content.Intent
@@ -14,8 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.anready.croissant.R
 import com.anready.croissant.adapter.FileUtils
-import com.anready.croissant.providers.LogsActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -45,12 +45,16 @@ class MainActivity : AppCompatActivity() {
 
         FileUtils.getObjectsByFolderId(this)
 
-        val fab = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.floatingActionButton)
+        val fab = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(
+            R.id.floatingActionButton
+        )
         fab.setOnClickListener {
             startActivity(Intent(this, LogsActivity::class.java))
         }
 
-        val appControl = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.floatingActionButton2)
+        val appControl = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(
+            R.id.floatingActionButton2
+        )
         appControl.setOnClickListener {
             startActivity(Intent(this, AppControl::class.java))
         }

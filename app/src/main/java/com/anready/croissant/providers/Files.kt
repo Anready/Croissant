@@ -65,11 +65,11 @@ class Files : ContentProvider() {
     }
 
     private fun accessToOpenFiles(): String {
-        return message("result", context?.getSharedPreferences(OPEN_FILES, Context.MODE_PRIVATE)?.getBoolean(callingPackage, true) == true)
+        return message("result", context?.getSharedPreferences(OPEN_FILES, Context.MODE_PRIVATE)?.getBoolean(callingPackage, false) == true)
     }
 
     private fun accessToCroissant(): String {
-        return message("result", context?.getSharedPreferences(APPS_READ_ACCESS, Context.MODE_PRIVATE)?.getBoolean(callingPackage, true) == true)
+        return message("result", context?.getSharedPreferences(APPS_READ_ACCESS, Context.MODE_PRIVATE)?.getBoolean(callingPackage, false) == true)
     }
 
     private fun message(type: String, message: Any): String {
@@ -98,13 +98,15 @@ class Files : ContentProvider() {
     }
 
     private fun listObjects(path: String): String {
-        if (context?.getSharedPreferences(APPS_READ_ACCESS, Context.MODE_PRIVATE)?.getBoolean(callingPackage, true) == false) {
-            return message("error", "ERR_05: No permission to access Croissant")
-        }
-
         val sharedPreferences = context?.getSharedPreferences(LOGS, Context.MODE_PRIVATE)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val formattedDate = dateFormat.format(Date())
+
+        if (context?.getSharedPreferences(APPS_READ_ACCESS, Context.MODE_PRIVATE)?.getBoolean(callingPackage, false) == false) {
+            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 05", "No permission to access Croissant")?.apply()
+            return message("error", "ERR_05: No permission to access Croissant")
+        }
+
 
         if (!checkPermission()) {
             sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 01", "Getting list of files in directory: $path")?.apply()
@@ -140,13 +142,14 @@ class Files : ContentProvider() {
     }
 
     private fun isPathExist(path: String): String {
-        if (context?.getSharedPreferences(APPS_READ_ACCESS, Context.MODE_PRIVATE)?.getBoolean(callingPackage, true) == false) {
-            return message("error", "ERR_05: No permission to access Croissant")
-        }
-
         val sharedPreferences = context?.getSharedPreferences(LOGS, Context.MODE_PRIVATE)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val formattedDate = dateFormat.format(Date())
+
+        if (context?.getSharedPreferences(APPS_READ_ACCESS, Context.MODE_PRIVATE)?.getBoolean(callingPackage, true) == false) {
+            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 05", "No permission to access Croissant")?.apply()
+            return message("error", "ERR_05: No permission to access Croissant")
+        }
 
         if (!checkPermission()) {
             sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 01", "Is path exist: $path")?.apply()
