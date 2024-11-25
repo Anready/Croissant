@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Croissant</string>
+    <string name="no_permission">Нет разрешения</string>
+    <string name="permission_granted">Разрешение выдано</string>
+    <string name="type">тип</string>
+    <string name="please_provide_a_permission">Пожалуйта, дайте разрешение</string>
+    <string name="app_action">Приложение %1$s\nДействие: %2$s</string>
+    <string name="no_app_to_open_this_file">Нету приложений для открытия этого файла</string>
+    <string name="checking_permission">Проверка разрешения</string>
+    <string name="no_permission_to_access_croissant">Нет разрешения на доступ к Croissant</string>
+    <string name="getting_list_of_files_in_directory">Получение списка файлов в директории: %1$s</string>
+    <string name="is_path_exist">Существует ли путь: %1$s</string>
+    <string name="logs">Логи</string>
+    <string name="clear">Очистить</string>
+    <string name="refresh">Обновить</string>
+    <string name="read_access_to_croissant">Дооступ к чтению к Croissant</string>
+    <string name="open_files">Откритие файлов</string>
+    <string name="app_permission">Разрешение приложений</string>
+    <string name="touch_to_close">Коснитется для закрытия</string>
+</resources>

@@ -10,12 +10,14 @@ import android.os.Environment
 import android.provider.Settings
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.anready.croissant.R
 import com.anready.croissant.adapter.FileUtils
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,14 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         responseTextView = findViewById(R.id.isPermissionGranted)
         responseTextView.text = if (checkPermission()) {
-            "Permission granted"
+            getString(R.string.permission_granted)
         } else {
-            "No permission"
+            getString(R.string.no_permission)
         }
 
         if (!checkPermission()) {
             requestPermission()
-            return
         }
 
         if (savedInstanceState != null) {
@@ -45,23 +46,28 @@ class MainActivity : AppCompatActivity() {
 
         FileUtils.getObjectsByFolderId(this)
 
-        val fab = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(
-            R.id.floatingActionButton
-        )
-        fab.setOnClickListener {
+        findViewById<FloatingActionButton>(R.id.floatingActionButton).setOnClickListener {
             startActivity(Intent(this, LogsActivity::class.java))
         }
 
-        val appControl = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(
-            R.id.floatingActionButton2
-        )
-        appControl.setOnClickListener {
+        findViewById<FloatingActionButton>(R.id.floatingActionButton2).setOnClickListener {
             startActivity(Intent(this, AppControl::class.java))
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (path.lastIndexOf("/") > 0) {
+                    path = path.substring(0, path.lastIndexOf("/"))
+                    FileUtils.getObjectsByFolderId(this@MainActivity)
+                } else {
+                    finish()
+                }
+            }
+        })
     }
 
     private fun requestPermission() {
-        Toast.makeText(this, "Please, provide a permission", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.please_provide_a_permission), Toast.LENGTH_SHORT).show()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
             val uri = Uri.fromParts("package", packageName, null)
@@ -94,21 +100,38 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode != 101) {
+            return
+        }
+
         if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             responseTextView.text = getString(R.string.no_permission)
             requestPermission()
         } else {
             responseTextView.text = getString(R.string.permission_granted)
-            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
             FileUtils.getObjectsByFolderId(this)
+        }
+
+        responseTextView.text = if (checkPermission()) {
+            getString(R.string.permission_granted)
+        } else {
+            getString(R.string.no_permission)
         }
     }
 
     private val grantPermissionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             responseTextView.text = getString(R.string.permission_granted)
-            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
             FileUtils.getObjectsByFolderId(this)
+
+            responseTextView.text = if (checkPermission()) {
+                getString(R.string.permission_granted)
+            } else {
+                getString(R.string.no_permission)
+            }
         }
     }
 
@@ -121,14 +144,5 @@ class MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         path = savedInstanceState.getString("N", "/")
-    }
-
-    override fun onBackPressed() {
-        if (path.lastIndexOf("/") > 0) {
-            path = path.substring(0, path.lastIndexOf("/"))
-            FileUtils.getObjectsByFolderId(this)
-        } else {
-            super.onBackPressed()
-        }
     }
 }

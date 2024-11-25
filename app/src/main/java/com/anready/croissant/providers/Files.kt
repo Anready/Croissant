@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.anready.croissant.Constants.APPS_READ_ACCESS
 import com.anready.croissant.Constants.LOGS
 import com.anready.croissant.Constants.OPEN_FILES
+import com.anready.croissant.R
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -86,7 +87,8 @@ class Files : ContentProvider() {
 
         val sharedPreferences = context.getSharedPreferences(LOGS, Context.MODE_PRIVATE)
 
-        sharedPreferences?.edit()?.putString("$formattedDate $callingPackage", "Checking permission")?.apply()
+        sharedPreferences?.edit()?.putString("$formattedDate $callingPackage",
+            context.getString(R.string.checking_permission))?.apply()
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Environment.isExternalStorageManager()
         } else {
@@ -103,23 +105,33 @@ class Files : ContentProvider() {
         val formattedDate = dateFormat.format(Date())
 
         if (context?.getSharedPreferences(APPS_READ_ACCESS, Context.MODE_PRIVATE)?.getBoolean(callingPackage, false) == false) {
-            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 05", "No permission to access Croissant")?.apply()
+            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 05",
+                context?.getString(
+                    R.string.no_permission_to_access_croissant
+                ))?.apply()
             return message("error", "ERR_05: No permission to access Croissant")
         }
 
 
         if (!checkPermission()) {
-            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 01", "Getting list of files in directory: $path")?.apply()
+            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 01",
+                context?.getString(
+                    R.string.getting_list_of_files_in_directory, path
+                ))?.apply()
             return message("error", "ERR_01: No permission to access external storage")
         }
 
-        sharedPreferences?.edit()?.putString("$formattedDate $callingPackage", "Getting list of files in directory: $path")?.apply()
+        sharedPreferences?.edit()?.putString("$formattedDate $callingPackage", context?.getString(
+            R.string.getting_list_of_files_in_directory, path
+        ))?.apply()
 
         val files = File(Environment.getExternalStorageDirectory().absolutePath + path).listFiles()
         val filesArray = JSONArray()
 
         if (files == null) {
-            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 02", "Getting list of files in directory: $path")?.apply()
+            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 02", context?.getString(
+                R.string.getting_list_of_files_in_directory, path
+            ))?.apply()
             return message("error", "ERR_02: Incorrect path provided")
         }
 
@@ -137,7 +149,9 @@ class Files : ContentProvider() {
             filesArray.put(fileObject)
         }
 
-        sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 00", "Getting list of files in directory: $path")?.apply()
+        sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 00", context?.getString(
+            R.string.getting_list_of_files_in_directory, path
+        ))?.apply()
         return filesArray.toString()
     }
 
@@ -147,17 +161,22 @@ class Files : ContentProvider() {
         val formattedDate = dateFormat.format(Date())
 
         if (context?.getSharedPreferences(APPS_READ_ACCESS, Context.MODE_PRIVATE)?.getBoolean(callingPackage, true) == false) {
-            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 05", "No permission to access Croissant")?.apply()
+            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 05", context?.getString(R.string.no_permission_to_access_croissant))?.apply()
             return message("error", "ERR_05: No permission to access Croissant")
         }
 
         if (!checkPermission()) {
-            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 01", "Is path exist: $path")?.apply()
+            sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 01",
+                context?.getString(
+                    R.string.is_path_exist, path
+                ))?.apply()
             return message("error", "ERR_01: No permission to access external storage")
         }
 
         val file = File(Environment.getExternalStorageDirectory().absolutePath + path).exists()
-        sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 00", "Is path exist: $path")?.apply()
+        sharedPreferences?.edit()?.putString("$formattedDate $callingPackage ERR_CODE: 00", context?.getString(
+            R.string.is_path_exist, path
+        ))?.apply()
         return message("result", file)
     }
 

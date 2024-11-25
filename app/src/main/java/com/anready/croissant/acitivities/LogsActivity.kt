@@ -1,6 +1,5 @@
 package com.anready.croissant.acitivities
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
@@ -38,7 +37,7 @@ class LogsActivity : AppCompatActivity() {
     }
 
     private fun showLogs() {
-        val sharedPreferences = getSharedPreferences(LOGS, Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(LOGS, MODE_PRIVATE)
         val logsLv = findViewById<android.widget.ListView>(R.id.logsLv)
 
         val logsMap = sharedPreferences.all
@@ -64,7 +63,12 @@ class LogsActivity : AppCompatActivity() {
             val selectedLog = logsList[position]
             val alertDialog = AlertDialog.Builder(this)
             alertDialog.setTitle(selectedLog.date)
-            alertDialog.setMessage("App ${selectedLog.app}\nAction: ${selectedLog.action}")
+            alertDialog.setMessage(
+                getString(
+                    R.string.app_action,
+                    selectedLog.app,
+                    selectedLog.action
+                ))
             alertDialog.setPositiveButton("ОК") { dialog, _ ->
                 dialog.dismiss()
             }
@@ -74,7 +78,7 @@ class LogsActivity : AppCompatActivity() {
 
 
     private fun clearLogs() {
-        val sharedPreferences = getSharedPreferences(LOGS, Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(LOGS, MODE_PRIVATE)
         sharedPreferences.edit().clear().apply()
         showLogs()
     }
