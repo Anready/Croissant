@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Croissant</string>
-    <string name="no_permission">No permission</string>
-    <string name="permission_granted">Permission granted</string>
-    <string name="type">type</string>
-    <string name="please_provide_a_permission">Please, provide a permission</string>
-    <string name="app_action">App %1$s\nAction: %2$s</string>
-    <string name="no_app_to_open_this_file">No app to open this file</string>
-    <string name="checking_permission">Checking permission</string>
-    <string name="no_permission_to_access_croissant">No permission to access Croissant</string>
-    <string name="getting_list_of_files_in_directory">Getting list of files in directory: %1$s</string>
-    <string name="is_path_exist">Is path exist: %1$s</string>
-    <string name="logs">Logs</string>
-    <string name="clear">Clear</string>
-    <string name="refresh">Refresh</string>
-    <string name="read_access_to_croissant">Read access to Croissant</string>
-    <string name="open_files">Open files</string>
-    <string name="app_permission">App permission</string>
-    <string name="touch_to_close">Touch to Close</string>
+    <string name="no_permission">Senza permessi</string>
+    <string name="permission_granted">Permessi garantiti</string>
+    <string name="type">tipo</string>
+    <string name="please_provide_a_permission">Si prega di fornire un'autorizzazione</string>
+    <string name="app_action">App %1$s\nAzione: %2$s</string>
+    <string name="no_app_to_open_this_file">Non sono presenti app per aprire questo file</string>
+    <string name="checking_permission">Verifica dell\'autorizazione</string>
+    <string name="no_permission_to_access_croissant">Nessun permesso per accedere a Croissant</string>
+    <string name="getting_list_of_files_in_directory">Ottenendo la lista di file nella directory: %1$s</string>
+    <string name="is_path_exist">Il percorso esiste: %1$s</string>
+    <string name="logs">Registri</string>
+    <string name="clear">Pulisci</string>
+    <string name="refresh">Aggiorna</string>
+    <string name="read_access_to_croissant">Leggi l\'accesso a Croissant</string>
+    <string name="open_files">Apri files</string>
+    <string name="app_permission">Permessi delle apl</string>
+    <string name="touch_to_close">Tocca per chiudere</string>
 </resources>
